@@ -34,17 +34,17 @@ const calendar = flatpickr(refs.datetimePicker, {
 });
 
 function onStart() {
-  const startTime = Date.now();
-  setInterval(() => {
-    calendar.formatDate(calendar.selectedDates[0], 'U');
-    console.log(calendar.selectedDates[0]);
+  const timerId = setInterval(() => {
+    refs.start.setAttribute('disabled', '');
+    const startTime = Date.now();
     time = calendar.selectedDates[0] - startTime;
-    // console.log(Number(time);
     timer = convertMs(time);
-    // console.log(timer);
+    console.log(timer);
     updateClockFace(timer);
-    
   }, 1000);
+  if (time === 0) {
+    clearInterval(timerId);
+  }
 }
 
 function updateClockFace({ days, hours, minutes, seconds }) {
