@@ -1,4 +1,4 @@
-refs = {
+const refs = {
   form: document.querySelector('.form'),
   delay: document.querySelector('[name="delay"]'),
   step: document.querySelector('[name="step"]'),
