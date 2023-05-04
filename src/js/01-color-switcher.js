@@ -5,6 +5,7 @@ const refs = {
 };
 
 let timerId;
+refs.stop.setAttribute('disabled', '');
 
 refs.start.addEventListener('click', onStart);
 refs.stop.addEventListener('click', onStop);
@@ -15,11 +16,13 @@ function onStart() {
     1000
   );
   refs.start.setAttribute('disabled', '');
+  refs.stop.removeAttribute('disabled');
 }
 
 function onStop() {
   clearInterval(timerId);
   refs.start.removeAttribute('disabled');
+  refs.stop.setAttribute('disabled', '');
 }
 
 function getRandomHexColor() {
