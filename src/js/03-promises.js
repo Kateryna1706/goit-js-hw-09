@@ -18,6 +18,10 @@ function onSubmit(event) {
   step = Number(refs.step.value);
   amount = Number(refs.amount.value);
   const timerId = setInterval(() => {
+    if (delay < 0 || step < 0 || amount <= 0) {
+      alert('Choose a positive value!');
+    }
+
     if (position === amount) {
       clearInterval(timerId);
       return;
