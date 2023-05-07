@@ -7,7 +7,6 @@ const refs = {
 
 refs.form.addEventListener('submit', onSubmit);
 
-let position = 0;
 let delay = 0;
 let step = 0;
 let amount = 0;
@@ -17,16 +16,12 @@ function onSubmit(event) {
   delay = Number(refs.delay.value);
   step = Number(refs.step.value);
   amount = Number(refs.amount.value);
-  const timerId = setInterval(() => {
-    if (delay < 0 || step < 0 || amount <= 0) {
-      alert('Choose a positive value!');
-    }
 
-    if (position === amount) {
-      clearInterval(timerId);
-      return;
-    }
-    position += 1;
+  if (delay < 0 || step < 0 || amount <= 0) {
+    alert('Choose a positive value!');
+  }
+
+  for (let position = 1; position <= amount; position += 1) {
     createPromise(position, delay)
       .then(({ position, delay }) => {
         console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
@@ -35,16 +30,18 @@ function onSubmit(event) {
         console.log(`❌ Rejected promise ${position} in ${delay}ms`);
       });
     delay += step;
-  }, delay);
+  }
 }
 
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
-    const shouldResolve = Math.random() > 0.3;
-    if (shouldResolve) {
-      resolve({ position, delay });
-    } else {
-      reject({ position, delay });
-    }
+    setTimeout(() => {
+      const shouldResolve = Math.random() > 0.3;
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
+      }
+    }, delay);
   });
 }
